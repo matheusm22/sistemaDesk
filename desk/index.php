@@ -1,3 +1,50 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>App Help Desk</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" +058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+    .card-login {
+      padding: 170px 0 0 0;
+      width: 350px;
+      margin: 0 auto;
+    }
+
+    body {
+      background-image: linear-gradient(to left, #008e9d 20%, #4bbc42 80%);
+
+    }
+
+    p{
+      position: relative;
+      top: 15px;
+      margin-left: 630px;
+      font-size: 25px;
+    }
+
+    .card-header{
+      font-size: 24px;
+      text-align: center;
+    }
+
+    #esq_senha {
+        text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="/desk/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      App Help Desk
+    </a>
+  </nav>
+
 <?php
 session_start(); // Iniciar a sessão
 
@@ -6,7 +53,7 @@ ob_start();
 
 // Acessa o IF quando o usuário clicou no botão "Acessar" do formulário
 if (!empty($_POST['submit'])) {
-  include_once 'config.php';
+  include_once '../desk/php/config.php';
   $usuario = $_POST['usuario'];
   $senha = $_POST['senha'];
 
@@ -40,7 +87,9 @@ if (!empty($_POST['submit'])) {
 
       // 7 days; 24 hours; 60 mins; 60secs
       // $duracao = time() + (7 * 24 * 60 * 60);
+      //  $duracao = time() + (45);
       $duracao = time() + (30 * 60);
+
 
       $payload = [
 
@@ -70,11 +119,11 @@ if (!empty($_POST['submit'])) {
 
       switch ($_SESSION['nivel']) {
         case '1':
-          header('Location: home.php');
+          header('Location: ../desk/php/home.php');
           break;
 
         case '2':
-          header('Location: admin.php');
+          header('Location: ../desk/php/admin.php');
           break;
 
         // default:
@@ -82,17 +131,18 @@ if (!empty($_POST['submit'])) {
       }
     } else {
       // Criar a mensagem de erro e atribuir para variável global "msg"  -- ERRO INPUT EM BRANCO
-      $_SESSION['msg'] = "<p style='color: #fff;'>Erro: Usuário ou senha inválida!</p>";
-      //     echo "<script>setTimeout(function() {
-      //     window.location.href = '/emails/index.php';
-      // }, 1200); </script>";
+      $_SESSION['msg'] = "<p class='p' style='color: #fff;'>Erro: Usuário ou senha inválida!</p>";
+      echo "<script>setTimeout(function() {
+        $('.p').fadeOut('fast');
+      }, 3000);</script>";
     }
   } else {
     // Criar a mensagem de erro e atribuir para variável global "msg" -- ERRO USUARIO INVÁLIDO
-    $_SESSION['msg'] = "<p style='color: #fff;'>Erro: Usuário ou senha inválida!</p>";
-    //   echo "<script>setTimeout(function() {
-    //     window.location.href = '/emails/index.php';
-    // }, 1200); </script>";
+    $_SESSION['msg'] = "<p class='p' style='color: #fff;'>Erro: Usuário ou senha inválida!</p>";
+    echo "<script>setTimeout(function() {
+      $('.p').fadeOut('fast');
+    }, 3000);</script>";
+  
   }
 }
 
@@ -107,40 +157,7 @@ if (isset($_SESSION['msg'])) {
 }
 
 ?>
-<html>
 
-<head>
-  <meta charset="utf-8" />
-  <title>App Help Desk</title>
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" +058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-  <style>
-    .card-login {
-      padding: 170px 0 0 0;
-      width: 350px;
-      margin: 0 auto;
-    }
-
-    body {
-      background-image: linear-gradient(to left, #008e9d 20%, #4bbc42 80%);
-
-    }
-
-    #esq_senha {
-      border: none;
-    }
-  </style>
-</head>
-
-<body>
-
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-      <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-      App Help Desk
-    </a>
-  </nav>
   <form action="" method="POST">
     <div class="container">
       <div class="row">
@@ -172,12 +189,13 @@ if (isset($_SESSION['msg'])) {
               </div>
               <input class="btn btn-lg btn-info btn-block" name="submit" type="submit" value="Acessar">
               <br>
-              <a href="cadastrar.php" class="btn  btn-outline-primary" id='esq_senha'>Esqueceu a senha?</a>
+              <a href="/desk/php/cadastrar.php" id='esq_senha'>Esqueceu a senha?</a>
   </form>
   </div>
   </div>
   </div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </body>
 
 </html>
