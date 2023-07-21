@@ -1,19 +1,13 @@
 <?php
 include_once('config.php');
 
-if (!isset($_SESSION)) {
-  session_start();
-}
+session_start();
 
 // Limpara o buffer de redirecionamento
 ob_start();
 
 // Incluir o arquivo para validar e recuperar dados do token
 include_once 'validar_token.php';
-
-if ($_SESSION['nivel'] != 2) {
-  header("Location: erro.php");
-}
 
 // Chamar a função validar o token, se a função retornar FALSE significa que o token é inválido e acessa o IF
 if (!validarToken()) {
@@ -26,17 +20,25 @@ if (!validarToken()) {
   // Pausar o processamento da página
   exit();
 }
+ 
+ $usuario = $_SESSION['usuario'] ;
 
-if (!empty($_GET['search'])) {
-  $data = $_GET['search'];
-  $sql = "SELECT * FROM tb_pedidos WHERE  id = '$data' or categoria LIKE '%$data%'
-     or situacao LIKE '%$data%' ORDER BY id DESC ";
+//  print_r($usuario);
+ 
+
+if(!empty($_GET['search']))
+{
+    $data = $_GET['search'];
+    $sql = "SELECT * FROM tb_pedidos WHERE id = '$data' or categoria LIKE '%$data%' or situacao = '%$data%' ORDER BY id DESC ";
+
 } else {
 
-  $sql = "SELECT * FROM tb_pedidos where situacao = 'Em atendimento' or situacao = 'Novo' ORDER BY id DESC ";
+$sql = "SELECT * FROM tb_pedidos where usuario ='$usuario' and
+situacao != 'finalizado'  ORDER BY id DESC ";
+
 }
 $result = $conexao->query($sql);
-
+// print_r($usuario);
 ?>
 <html>
 
@@ -47,7 +49,7 @@ $result = $conexao->query($sql);
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <style>
-    .table {
+     .table {
       background-color: aliceblue;
       margin: auto;
       text-align: center;
@@ -66,16 +68,15 @@ $result = $conexao->query($sql);
     
     #titulo {
       position: relative;
-      left: 500px;
+      left: 450px;
       font-size: 30px;
       
     }
-
     #filtro {
       position: relative;
       left: 600px;
       padding: 30px;
-
+     
     }
 
     #pesquisar {
@@ -95,17 +96,11 @@ $result = $conexao->query($sql);
       bottom: 120px;
     }
 
-    
-    table, tr, td{
-               border:none !important;
-               
-              
-        }
 
     body {
       overflow-x: hidden;
     }
-
+    
     td>a {
       display: inline;
       width: max-content;
@@ -120,13 +115,17 @@ $result = $conexao->query($sql);
     td:nth-child(8) {
       width: 350px;
     }
-  
-    
+
+    #teste {
+      background: none;
+      border: none;
+      color: black;
+    }
+
     .card-header {
       text-align: center;
       font-size: 24px;
     }
-   
   </style>
 </head>
 
@@ -137,37 +136,37 @@ $result = $conexao->query($sql);
   ?>
 
   <div id='filtro'>
-    <input type="search" class="form-control" id="pesquisar" placeholder="Número/ Categoria/ Situação" autofocus autocomplete="on">
-    <button onclick="searchData()" class="btn btn-lg btn-primary" id="btn">Buscar</button>
+    <input type="search" class="form-control"  id="pesquisar" placeholder="Número/ Categoria/ Situação"  autofocus autocomplete="on">
+    <button onclick="searchData()" class="btn btn-primary" id="btn">Buscar</button>
   </div>
 
-  <?php
-
+  <?php 
+  
   switch ($_SESSION['nivel']) {
-
+                      
     case '1':
-      echo " <a class='btn btn-lg btn-primary' id='voltar' href='home.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
-      break;
-
-    case '2':
-
-      echo " <a class='btn btn-lg btn-primary' id='voltar' href='admin.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
-      break;
-  }
-
+        echo " <a class='btn  btn-primary' id='voltar' href='home.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
+          break;
+  
+    case '2':  
+      
+      echo " <a class='btn btn-primary' id='voltar' href='admin.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
+          break;
+    }
+  
   ?>
 
   <div class="container">
     <div class="row">
 
-      <div class="card-consultar-chamado">
+    <div class="card-consultar-chamado">
              <p id="titulo"><strong>Consulta de chamado<strong></p>
           </div>
 
-          <table class="table" >
+          <table class="table">
             <thead>
               <tr>
-                <th>#</th>
+              <th>#</th>
                 <th>Solicitante</th>
                 <th>Título</th>
                 <th>Categoria</th>
@@ -181,10 +180,6 @@ $result = $conexao->query($sql);
               </tr>
             </thead>
             <?php
-
-            $usuario_logado = $_SESSION['usuario'];
-            // print_r($usuario);
-
             if ($result->num_rows == 0) {
               echo '<td colspan="10">';
               echo "Nenhuma solicitação pendente!!!</td>";
@@ -226,38 +221,17 @@ $result = $conexao->query($sql);
               echo "<td>" . $user_data['categoria'] . "</td>";
               echo "<td>" . $user_data['descricao'] . "</td>";
               echo "<td>" . $user_data['responsavel'] . "</td>";
-              if($user_data['respostas'] == "" && $user_data['responsavel'] == $usuario_logado) {
-                  echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Responder</a></td>";;
+              if($user_data['respostas'] == "") {
+                echo "<td><p class='btn  btn-secondary'>Sem resposta</p></td>";
               } else {
                   echo "<td><a class='btn btn-primary' href='respondido.php?id=$user_data[id]'>ver resposta</a></td>";
               }
               echo "<td>" . $user_data['situacao'] . "</td>";
               echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
               echo "<td>" . $data_criacao . $space . substr($hora, 0, 5) . "</td>";
-
-              if ($user_data['situacao'] == "Novo" && $user_data['usuario'] != $usuario_logado) {
-                echo "<td><a class='btn btn-lg btn-warning'  href='iniciar.php?id=$user_data[id]'>Iniciar</a></td>";
-              } 
-               if ( $user_data['usuario'] == $usuario_logado && $user_data['situacao'] != "Em Atendimento"
-                    && $user_data['situacao'] != "Finalizado"){
-                echo "<td><a class='btn btn-lg btn-info' href='edita.php?id=$user_data[id]'>Editar</a></td>";
-              }
-
-              if ($usuario_logado == $user_data['responsavel']) {
-                if ($user_data['situacao'] == "Em Atendimento") {
-
-                     echo "<td><a  data-toggle='tooltip' data-placement='right' title='Finalizar' class='btn btn-lg btn-success' href='confirm.php?id=$user_data[id]'>Finalizar</a></td>"; 
-                }
-              } else if($user_data['situacao'] != "Novo"){
-                echo "<td><p class='btn  btn-secondary'>". $user_data['responsavel']."</p></td>";
-              }
-
-              if ($user_data['situacao'] == "Finalizado") {
-                echo "<td><p class='btn btn-lg btn-success'>Concluído</p></td>";
-              }
-             
+              echo "<td><a class='btn btn-info' href='edita.php?id=$user_data[id]'>Editar</a></td>";
             }
-
+            
 
             ?>
         </div>
@@ -271,7 +245,7 @@ $result = $conexao->query($sql);
     var search = document.getElementById('pesquisar');
 
     function searchData() {
-      window.location = 'consultar_chamado.php?search=' + search.value;
+      window.location = 'meus_chamados.php?search=' + search.value;
     }
 
     search.addEventListener("keydown", function(event) {

@@ -33,23 +33,41 @@ if(!validarToken()){
     <style>
       .card-home {
         padding: 30px 0 0 0;
-        width: 30%;
+        width: 43%;
         margin: 0 auto;
       }
+      
+      .card-header {
+        text-align: center;
+        font-size: 24px;
+      }
+
       p {
         font-size: 20px;
+      }
+
+      #espaco {
+
+        position: relative;
+        right: 60px;
+
+      }
+
+      #espaco2 {
+
+        position: relative;
+        left: 30px;
+
       }
     </style>
   </head>
 
   <body>
-
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        <img src="/desk/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-        App Help Desk
-      </a>
-    </nav>
+    <?php 
+    
+    require_once 'header.php';
+    
+    ?>
 
     <div class="container">    
       <div class="row">
@@ -63,8 +81,12 @@ if(!validarToken()){
 
               <div class="row">
                 <div class="col-12 d-flex justify-content-center">
-                  
-                  <a href="../../desk/php/abrir_chamado.php"><img src="/desk/img/formulario_abrir_chamado.png" width="70" height="70"></a> 
+                <div id ="espaco">
+                  <a href='../../desk/php/abrir_chamado.php' class="btn btn-info">Abrir Chamado</a>
+                  </div>
+                 
+                  <div id ="espaco2">
+                  <a href='../../desk/php/meus_chamados.php' class="btn btn-primary">Meus chamados</a>
                 </div>
               </div>
             </div>

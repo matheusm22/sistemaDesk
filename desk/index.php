@@ -33,6 +33,11 @@
     #esq_senha {
         text-decoration: none;
     }
+    #cadastrar {
+      text-decoration: none;
+      position: relative;
+      left: 20px;
+    }
   </style>
 </head>
 
@@ -86,9 +91,11 @@ if (!empty($_POST['submit'])) {
       $header = base64_encode($header);
 
       // 7 days; 24 hours; 60 mins; 60secs
-      // $duracao = time() + (7 * 24 * 60 * 60);
+      //  $duracao = time() + (7 * 24 * 60 * 60);
+
+      //  USAR PARA TESTES
       //  $duracao = time() + (45);
-      $duracao = time() + (30 * 60);
+      $duracao = time() + (60 * 60);
 
 
       $payload = [
@@ -152,6 +159,10 @@ if (isset($_SESSION['msg'])) {
   // Imprimir o valor da variável global "msg"
   echo $_SESSION['msg'];
 
+  echo "<script>setTimeout(function() {
+    $('.p').fadeOut('fast');
+  }, 3000);</script>";
+
   // Destruir a variável globar "msg"
   unset($_SESSION['msg']);
 }
@@ -176,7 +187,7 @@ if (isset($_SESSION['msg'])) {
                   $user = $usuario;
                 }
                 ?>
-                <input type="text" class="form-control" name="usuario" placeholder="login" value="<?php echo $user; ?>">
+                <input type="text" class="form-control" name="usuario" id="usuario"  placeholder="login" autofocus value="<?php echo $user; ?>">
               </div>
               <div class="form-group">
                 <?php
@@ -187,15 +198,19 @@ if (isset($_SESSION['msg'])) {
                 ?>
                 <input type="password" class="form-control" name="senha" placeholder="Senha" value="<?php echo $password;?>">
               </div>
-              <input class="btn btn-lg btn-info btn-block" name="submit" type="submit" value="Acessar">
+              <form action="/desk/php/admin.php" method="post">
+                <input type="hidden" name="matricula">
+              <input class="btn btn-lg btn-success btn-block" name="submit" type="submit" value="Acessar">
               <br>
-              <a href="/desk/php/cadastrar.php" id='esq_senha'>Esqueceu a senha?</a>
+              <a href="/desk/php/senha.php" id='esq_senha'>Esqueceu a senha?</a> &nbsp; &nbsp; |
+              <a href="/desk/php/cadastrar.php" id='cadastrar'>Cadastre-se</a>
+              </form>
   </form>
   </div>
   </div>
   </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-</body>
-
+  <script src="/desk/js/login.js"></script>
+  
 </html>

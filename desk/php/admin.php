@@ -1,19 +1,20 @@
 <?php 
  
 // SESSÃO RESPONSÁVEL PELO LOGIN
-session_start();
-
+if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  } 
 // Limpara o buffer de redirecionamento
 ob_start();
 
 // Incluir o arquivo para validar e recuperar dados do token
 include_once 'validar_token.php';
 
-
 if ($_SESSION['nivel'] != 2) {
 
     // Redireciona o o usuário para o arquivo index.php
-           header("Location: erro.php");
+    header("Location: erro.php");
 
 }
 // Chamar a função validar o token, se a função retornar FALSE significa que o token é inválido e acessa o IF
@@ -28,6 +29,7 @@ if(!validarToken()){
     exit();
  }
 
+ 
 
 
 ?>
@@ -48,18 +50,17 @@ if(!validarToken()){
         width: 50%;
         margin: 0 auto;
       }
+      .card-header {
+        text-align: center;
+        font-size: 24px;
+      }
     </style>
   </head>
 
   <body>
-
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        <img src="/desk/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-        App Help Desk
-      </a>
-    </nav>
-
+<?php 
+  require_once 'header.php';
+?>
     <div class="container">    
       <div class="row">
 
@@ -72,16 +73,16 @@ if(!validarToken()){
 
               <div class="row">
                 <div class="col-6 d-flex justify-content-center">
-                  
-                  <a href="../../desk/php/abrir_chamado.php"><img src="/desk/img/formulario_abrir_chamado.png" width="70" height="70"></a> 
+                  <a href='../../desk/php/abrir_chamado.php' class='btn btn-info'>Abrir chamado</a>
                 </div>
                 <div class="col-6 d-flex justify-content-center">
-                 <a href="../../desk/php/consultar_chamado.php"><img src="/desk/img/formulario_consultar_chamado.png" width="70" height="70"></a>
+                 <a href="../../desk/php/consultar_chamado.php" class="btn btn-primary">Meus Atendimentos</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
     </div>
+   
   </body>
 </html>

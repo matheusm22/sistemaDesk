@@ -19,7 +19,8 @@
     }
 
     body {
-      background-image: linear-gradient(to left, #008e9d 20%, #4bbc42 80%);
+      background-image: linear-gradient(to right, #E70808 30%, #E78608, #E1D209);
+
 
     }
 
@@ -33,7 +34,7 @@
 <body>
 
   <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/desk/index.php">
+    <a class="navbar-brand" href="/desk/index.php" data-toggle="tooltip" data-placement="right" title="Inicio">
       <img src="/desk/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
       App Help Desk
     </a>
@@ -87,7 +88,7 @@
             $matricula = $_POST['matricula'];
 
             $insert = mysqli_query($conexao, "INSERT INTO tb_acessos(usuario,senha,matricula, ativo, nivel) 
-              VALUES ('$usuario', '$senha','$matricula', 'Sim', 1)");
+              VALUES ('$usuario', '$senha','$matricula', 'Sim', 2)");
 
 
             $sql = mysqli_query($conexao, "SELECT * FROM tb_acessos WHERE usuario = '$usuario' ORDER BY id_usuario ASC");
@@ -122,7 +123,7 @@
             <div class="card-body">
 
               <div class="form-group">
-                <input type="text" class="form-control" name="usuario" placeholder="Usuário">
+                <input type="text" class="form-control" autofocus name="usuario" placeholder="Usuário">
               </div>
               <div class="form-group">
                 <input type="password" class="form-control" name="senha" placeholder="Senha">
@@ -130,7 +131,7 @@
               <div class="form-group">
                 <input type="text" class="form-control w-50" name="matricula" id="matricula" placeholder="Matricula">
               </div>
-              <button class="btn btn-lg btn-outline-success btn-block" id="adicionar" name="submit" type="submit">Adicionar</button>
+              <button class="btn btn-lg btn-danger btn-block" id="adicionar" name="submit" type="submit">Adicionar</button>
               <br>
   </form>
   </div>
