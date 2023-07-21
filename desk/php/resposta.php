@@ -7,7 +7,7 @@
   <style>
     .card-abrir-chamado {
       padding: 50px 0 0 0;
-      width: 50%;
+      width: 80%;
       margin: 0 auto;
     }
 
@@ -120,8 +120,8 @@ if(!empty($_GET['id'])) {
                   </div>
                   
                   <div class="form-group" >
-                   
-                    <?php echo '<strong>' . $descricao .'</strong>'?> <br> <br>
+                  <label>Descrição atual:</label>
+                    <?php echo "<p><strong>$descricao </strong></p>"?>
                     <label><strong>Enviar Resposta:</strong></label>
                     <textarea class="form-control w-50" name="resposta" rows="3"></textarea>
                   </div>

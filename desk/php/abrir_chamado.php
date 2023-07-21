@@ -78,7 +78,6 @@
         }, 2000);</script>";
 
     } else {
-
       
       $usuario_logado =  $_SESSION['usuario'];
       $nomes = array('matheus', 'gustavo', 'matheus_cichon', 'kaio_costa');

@@ -66,7 +66,7 @@ $result = $conexao->query($sql);
     
     #titulo {
       position: relative;
-      left: 500px;
+      left: 450px;
       font-size: 30px;
       
     }
@@ -171,7 +171,6 @@ $result = $conexao->query($sql);
                 <th>Solicitante</th>
                 <th>Título</th>
                 <th>Categoria</th>
-                <th>Descrição</th>
                 <th>Responsável</th>
                 <th>Resposta</th>
                 <th>Situação</th>
@@ -224,7 +223,7 @@ $result = $conexao->query($sql);
               echo "<td>" . $user_data['usuario'] . "</td>";
               echo "<td>" . $user_data['titulo'] . "</td>";
               echo "<td>" . $user_data['categoria'] . "</td>";
-              echo "<td>" . $user_data['descricao'] . "</td>";
+              
               echo "<td>" . $user_data['responsavel'] . "</td>";
               if($user_data['respostas'] == "" && $user_data['responsavel'] == $usuario_logado) {
                   echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Responder</a></td>";;

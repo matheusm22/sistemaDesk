@@ -1,8 +1,12 @@
 <?php 
-
+if(!isset($_SESSION)){
+    session_start();
+}
 include_once('config.php');
 
 if(isset($_POST['submit'])) {
+
+    $nivel = $_SESSION['nivel'];
 
     $id = $_POST['id'];
     $titulo = $_POST['titulo'];
@@ -23,9 +27,12 @@ if(isset($_POST['submit'])) {
   
     $result = $conexao->query($sql);
     }
-    header('location: meus_chamados.php');
+    if ($nivel == 2) {
+        header('location: consultar_chamado.php');
+    }else {
+        header('location: meus_chamados.php');
 }
-
+}
 if (isset($_POST['responder'])) {
 
      $id = $_POST['id'];

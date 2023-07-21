@@ -170,7 +170,6 @@ $result = $conexao->query($sql);
                 <th>Solicitante</th>
                 <th>Título</th>
                 <th>Categoria</th>
-                <th>Descrição</th>
                 <th>Responsável</th>
                 <th>Resposta</th>
                 <th>Situação</th>
@@ -219,7 +218,6 @@ $result = $conexao->query($sql);
               echo "<td>" . $user_data['usuario'] . "</td>";
               echo "<td>" . $user_data['titulo'] . "</td>";
               echo "<td>" . $user_data['categoria'] . "</td>";
-              echo "<td>" . $user_data['descricao'] . "</td>";
               echo "<td>" . $user_data['responsavel'] . "</td>";
               if($user_data['respostas'] == "") {
                 echo "<td><p class='btn  btn-secondary'>Sem resposta</p></td>";
