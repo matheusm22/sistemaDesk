@@ -80,18 +80,18 @@
     } else {
       
       $usuario_logado =  $_SESSION['usuario'];
-      $nomes = array('matheus', 'gustavo', 'matheus_cichon', 'kaio_costa');
+      $nomes = array('matheus', 'gustavo', 'matheus_cichon', 'kaio_costa', 'lucas_dias');
       $rand_keys = array_rand($nomes, 4);
-      $responsavel = $nomes[$rand_keys[rand(0, 3)]];
+      $responsavel = $nomes[$rand_keys[rand(0, 1)]];
 
-      if($responsavel != $usuario) { 
+      if($responsavel != $usuario_logado) { 
 
-    $titulo = $_POST['titulo'];
-    $categoria = $_POST['categoria'];
-    $descricao = $_POST['descricao'];
+      $titulo = $_POST['titulo'];
+      $categoria = $_POST['categoria'];
+      $descricao = $_POST['descricao'];
 
-    $sql = mysqli_query($conexao, "INSERT INTO tb_pedidos(usuario, titulo, categoria, descricao, responsavel, situacao)
-     VALUES ('$usuario_logado','$titulo','$categoria','$descricao','$responsavel', 'Novo')");
+      $sql = mysqli_query($conexao, "INSERT INTO tb_pedidos(usuario, titulo, categoria, descricao, responsavel, situacao)
+      VALUES ('$usuario_logado','$titulo','$categoria','$descricao','$responsavel', 'Novo')");
 
      $sqlSelect = "SELECT * FROM tb_pedidos where titulo = '$titulo' and categoria = '$categoria' 
      and descricao = '$descricao' order by id limit 1";
@@ -102,8 +102,11 @@
             echo "<p id='p' style='color: green; font-size: 22px'>Uhul! Você acabou de enviar uma solicitação! 😍</p>";
 
             echo "<script>setTimeout(function() {
-            $('#p').fadeOut('fast');
-          }, 2000);</script>";
+              $('#p').fadeOut('fast');
+            }, 2000);</script>";    
+            $titulo = null;
+            $categoria = null;
+            $descricao = null;
         
         } 
       }

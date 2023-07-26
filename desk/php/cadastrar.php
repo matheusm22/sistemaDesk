@@ -39,7 +39,7 @@
       App Help Desk
     </a>
   </nav>
-  <?php
+  <?
 
   if (isset($_POST['usuario']) || isset($_POST['senha']) || isset($_POST['matricula'])) {
     include_once('config.php');
@@ -88,7 +88,7 @@
             $matricula = $_POST['matricula'];
 
             $insert = mysqli_query($conexao, "INSERT INTO tb_acessos(usuario,senha,matricula, ativo, nivel) 
-              VALUES ('$usuario', '$senha','$matricula', 'Sim', 2)");
+              VALUES ('$usuario', '$senha','$matricula', 'Sim', 1)");
 
 
             $sql = mysqli_query($conexao, "SELECT * FROM tb_acessos WHERE usuario = '$usuario' ORDER BY id_usuario ASC");
@@ -123,10 +123,10 @@
             <div class="card-body">
 
               <div class="form-group">
-                <input type="text" class="form-control" autofocus name="usuario" placeholder="Usuário">
+                <input type="text" class="form-control" autofocus name="usuario" id="usuario"  placeholder="Usuário">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" name="senha" placeholder="Senha">
+                <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha">
               </div>
               <div class="form-group">
                 <input type="text" class="form-control w-50" name="matricula" id="matricula" placeholder="Matricula">
@@ -139,6 +139,9 @@
   </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="/desk/js/script.j"></script>
+
+
 
 </body>
 

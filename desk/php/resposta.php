@@ -5,28 +5,77 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <style>
+     body{
+      overflow-x: hidden;
+     } 
+
     .card-abrir-chamado {
-      padding: 50px 0 0 0;
-      width: 80%;
+      padding: 30px 0 0 0;
+      width: 70%;
       margin: 0 auto;
     }
 
     .form-group {
       position: relative;
       left: 120px;
-
     }
+
+    #categoria {
+      position: relative;
+      bottom: 40px;
+    }
+
 
     #enviar {
       position: relative;
       right: 110px;
-
     }
+
     .card-header {
       text-align: center;
       font-size: 24px;
     }
-    
+
+    #resposta_titulo{
+
+      font-size: 20px;
+
+    }
+
+    .p {
+      padding: 10px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .solicitante {
+      font-size: 18px;
+      position: relative;
+      left: 530px;
+      bottom: 60px;
+    }
+
+    .titulos{
+      font-size: 18px;
+    }
+
+    .data{
+      font-size: 14px;
+    }
+
+    .respostas {
+      font-size: 20px;
+    }
+
+    #categoria {
+      position: relative;
+      bottom: 50px;
+    }
+    #descricao {
+      position: relative;
+      bottom: 50px;
+    }
+
   </style>
 </head>
 
@@ -37,10 +86,9 @@
 
   include_once('config.php');
 
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
+  if (!isset($_SESSION)) {
+    session_start();
+  }
   // Limpara o buffer de redirecionamento
   ob_start();
 
@@ -58,59 +106,144 @@
     // Pausar o processamento da página
     exit();
   }
-  
-
-if(!empty($_GET['id'])) {
- 
-  include_once('config.php');
-
-  $id = $_GET['id'];
-
-  $sql = "SELECT * FROM tb_pedidos WHERE id=$id";
-
-  $result = $conexao->query($sql);
-
-  if($result->num_rows > 0) {
-
-   while ($user_data = mysqli_fetch_assoc($result)) {
 
 
-    
-    $titulo = $user_data['titulo'];
-    $categoria = $user_data['categoria'];
-    $descricao = $user_data['descricao'];
+  if (!empty($_GET['id'])) {
+
+    include_once('config.php');
+
+    $id = $_GET['id'];
+
+    $sql = "SELECT * FROM tb_pedidos WHERE id=$id";
+
+    $result = $conexao->query($sql);
+
+    if ($result->num_rows > 0) {
+
+      while ($user_data = mysqli_fetch_assoc($result)) {
+
+        $titulo = $user_data['titulo'];
+        $categoria = $user_data['categoria'];
+        $descricao = $user_data['descricao'];
+        $responsavel = $user_data['responsavel'];
+        $respostas_resp = $user_data['respostas_resp'];
+        $respostas_soli = $user_data['respostas_soli'];
+        $solicitante = $user_data['usuario'];
+        $usuario_logado = $_SESSION['usuario'];
+        $data = $user_data['dta_atualizacao'];
+
+      }
     }
   }
+
+  if (isset($_POST['responder'])) {
+
+    $id = $_POST['id'];
+
+    $select = "SELECT * FROM tb_pedidos WHERE id='$id'";
+    
+    $result1 = $conexao->query($select);
+
+    
+    if ($result1->num_rows > 0) {
+
+    while ($user_data = mysqli_fetch_assoc($result1)) {
+
+     $id = $_POST['id'];
+     $resposta = $_POST['resposta'];
+     $usuario_logado = $_SESSION['usuario'];
+     $solicitante = $user_data['usuario'];  
+     $responsavel = $user_data['responsavel'];
+     $situacao = $user_data['situacao'];   
+
+    
+     if($usuario_logado == $solicitante) {
+        
+        $sqlResp = "UPDATE tb_pedidos SET respostas_soli = '$resposta' where id = '$id' ";
+        $result = $conexao->query($sqlResp);  
+
+         echo  "<p class='p' style='color: green;'>Resposta enviada!</p>";
+         echo "<script>setTimeout(function() {
+          $('.p').fadeOut('fast');
+        }, 3000);</script>";
+
+          header("location:resposta.php?&id={$id}");
+    } 
+
+    if($usuario_logado == $responsavel) {
+        
+        $sqlResp = "UPDATE tb_pedidos SET respostas_resp = '$resposta' where id = '$id' ";
+        $result = $conexao->query($sqlResp);
+
+         echo  "<p class='p' style='color: green;'>Resposta enviada!</p>";
+         echo "<script>setTimeout(function() {
+          $('.p').fadeOut('fast');
+        }, 3000);</script>";
+
+        header("location:resposta.php?&id={$id}");
+ 
+    } 
+
+    if($usuario_logado == $responsavel && $situacao == 'Novo') {
+    
+        $sqlResp = "UPDATE tb_pedidos SET respostas_resp = '$resposta', situacao ='Em Atendimento' where id = '$id' ";
+        $result = $conexao->query($sqlResp);
+
+          echo  "<p class='p' style='color: green;'>Resposta enviada!</p>";
+          echo "<script> setTimeout(function() {
+                      window.location.reload(1);
+                    }, 1500); ;</script>";
+          
+          header("location:resposta.php?&id={$id}");           
+            
+    }
+  
+    $id = $_POST['id'];
+    $resposta = $_POST['resposta'];
+    $usuario_logado = $_SESSION['usuario'];
+    $solicitante = $user_data['usuario'];
+}    
+  }
 }
-    // VERIFICAR SE ESTA ENVIANDO CORRETAMENTE EM CASO DE ERRO!
-    //  print_r('titulo : ' . $titulo);
-    //  print_r('<br/>' );
-    //  print_r('cat : ' . $categoria);
-    //  print_r('<br/>' );
-    //  print_r('desc : ' . $descricao);
+ // TESTES
+ // print_r($resposta);
+// print_r($id);
+
+  // // VERIFICAR SE ESTA ENVIANDO CORRETAMENTE EM CASO DE ERRO!
+  //  print_r('titulo : ' . $titulo);
+  //  print_r('<br/>' );
+  //  print_r('cat : ' . $categoria);
+  //  print_r('<br/>' );
+  //  print_r('desc : ' . $descricao);
 
   ?>
- 
-    <div class="container">
-      <div class="row">
 
-        <div class="card-abrir-chamado">
-          <div class="card">
-            <div class="card-header">
-              Responder chamado
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                <form action="saveEdit.php" method="POST">
+  <div class="container">
+    <div class="row">
+
+      <div class="card-abrir-chamado">
+        <div class="card">
+          <div class="card-header">
+            Responder chamado
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <form action="" method="POST">
                   <div class="form-group">
                     <label>Título</label>
-                    <input type="text" name="titulo" disabled value="<?php echo $titulo?>" autofocus class="form-control w-50" placeholder="Título">
+                    <input type="text" name="titulo" disabled value="<?php echo $titulo ?>" autofocus class="form-control w-50" placeholder="Título">
                   </div>
-
-                  <div class="form-group w-50">
+                  <div class="solicitante">
+                  <?php 
+                   echo "<span>Solicitante: <strong>$solicitante</strong></usuario_logadospan>";
+                   echo "<br>";
+                   echo "<span>Número da solicitação: <strong>$id</strong></span>";
+                  ?>
+                  </div>
+                  <div class="form-group w-50" id="categoria">
                     <label>Categoria</label>
-                    <select name="categoria" disabled value="<?php echo $categoria?>" class="form-control">
+                    <select name="categoria" disabled value="<?php echo $categoria ?>" class="form-control">
                       <option name="categoria">Criação Usuário</option>
                       <option name="categoria">Impressora</option>
                       <option name="categoria">Hardware</option>
@@ -118,34 +251,83 @@ if(!empty($_GET['id'])) {
                       <option name="categoria">Rede</option>
                     </select>
                   </div>
-                  
-                  <div class="form-group" >
-                  <label>Descrição atual:</label>
-                    <?php echo "<p><strong>$descricao </strong></p>"?>
-                    <label><strong>Enviar Resposta:</strong></label>
-                    <textarea class="form-control w-50" name="resposta" rows="3"></textarea>
-                  </div>
 
-                  <div class="row mt-5">
-                    <div class="col-6">
-                     <a class='btn btn-lg btn-primary' id='voltar' href='meus_chamados.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>
-                      
+                  <div class="form-group" id="descricao">
+                    <label>Descrição atual:</label>
+                    <?php echo "<p>$descricao</p>";
+                       
+                      $data = explode(' ', $data);
+
+                      $hora = $data[1];
+
+                      $space = '  ';
+
+                      $datas = explode('-',  $data[0]);
+
+                      $datas = array_reverse($datas);
+
+                      $datas = implode('/', $datas);
+
+                    if ($respostas_resp != null) {
+                      echo "<span id='resposta_titulo'><strong>Respostas</strong></span>";
+                      echo "<br>";
+                      echo "<span class='titulos'>Responsável $responsavel</label>";
+                      echo "<br>";
+                      echo "<span class='data'>$space $datas $space " . substr($hora, 0, 5)."</span>";
+                      echo "<br>";
+                      echo "<span class='respostas'><strong>$respostas_resp</strong></span>";
+                      echo "<br>";
+                      echo "<br>";
+                    }
+                    
+                    if ($respostas_soli != null) {
+                      echo "<span class='titulos'>Solicitante $solicitante</span>";
+                      echo "<br>";
+                      echo "<span class='data'>$space $datas $space " . substr($hora, 0, 5)."</span>";
+                      echo "<br>";
+                      echo "<span class='respostas'><strong>$respostas_soli</strong></span>";
+                      echo "<br>";
+                      echo "<br>";
+                    }
+
+                    if($usuario_logado == $solicitante || $usuario_logado == $responsavel) {
+                      echo " <span>Enviar Resposta:</span>
+                             <textarea class='form-control w-50' name='resposta' rows='3'></textarea>
+                             </div>";
+                    }
+                    ?>
+
+                    <div class="row mt-5">
+                      <div class="col-6">
+                        <?php
+                           $nivel = $_SESSION['nivel'];
+              
+                        if ($nivel == 2) {
+
+                          echo "<a class='btn btn-lg btn-primary' id='voltar' href='consultar_chamado.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Consultar Chamado'>Voltar</a>";
+                        } else {
+
+                          echo "<a class='btn btn-lg btn-primary' id='voltar' href='meus_chamados.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Meus Chamados'>Voltar</a>";
+                        }
+                        ?>
+
+                      </div>
+
+                      <div class="col-6">
+                        <input type="hidden" name="id" value="<?php echo $id ?>">
+                        <input type="submit" class="btn btn-lg btn-info w-75 " id="enviar"  name="responder">
+                      </div>
                     </div>
+                </form>
 
-                    <div class="col-6">
-                      <input type="hidden" name="id"  value="<?php echo $id ?>"> 
-                      <input type="submit" class="btn btn-lg btn-info w-75 " id="enviar" name="responder">
-                    </div>
-                  </div>
-  </form>
-
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </body>
 
 </html>

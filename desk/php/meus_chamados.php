@@ -29,7 +29,7 @@ if (!validarToken()) {
 if(!empty($_GET['search']))
 {
     $data = $_GET['search'];
-    $sql = "SELECT * FROM tb_pedidos WHERE id = '$data' or categoria LIKE '%$data%' or situacao = '%$data%' ORDER BY id DESC ";
+    $sql = "SELECT * FROM tb_pedidos WHERE (id = '$data' and usuario ='$usuario') or (categoria LIKE '%$data%' and usuario ='$usuario') or (situacao LIKE '%$data%' and usuario ='$usuario') ORDER BY id DESC ";
 
 } else {
 
@@ -219,10 +219,10 @@ $result = $conexao->query($sql);
               echo "<td>" . $user_data['titulo'] . "</td>";
               echo "<td>" . $user_data['categoria'] . "</td>";
               echo "<td>" . $user_data['responsavel'] . "</td>";
-              if($user_data['respostas'] == "") {
+              if($user_data['respostas_resp'] == "") {
                 echo "<td><p class='btn  btn-secondary'>Sem resposta</p></td>";
               } else {
-                  echo "<td><a class='btn btn-primary' href='respondido.php?id=$user_data[id]'>ver resposta</a></td>";
+                  echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>ver respostas</a></td>";
               }
               echo "<td>" . $user_data['situacao'] . "</td>";
               echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";

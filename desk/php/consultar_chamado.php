@@ -29,11 +29,11 @@ if (!validarToken()) {
 
 if (!empty($_GET['search'])) {
   $data = $_GET['search'];
-  $sql = "SELECT * FROM tb_pedidos WHERE  id = '$data' or categoria LIKE '%$data%'
-     or situacao LIKE '%$data%' ORDER BY id DESC ";
+  $sql = "SELECT * FROM tb_pedidos WHERE  id = '$data' or responsavel LIKE '%$data%' or categoria LIKE '%$data%'
+  or situacao LIKE '%$data%' ORDER BY id DESC ";
 } else {
 
-  $sql = "SELECT * FROM tb_pedidos where situacao = 'Em atendimento' or situacao = 'Novo' ORDER BY id DESC ";
+  $sql = "SELECT * FROM tb_pedidos where situacao = 'Em atendimento' or situacao = 'Novo' ORDER BY id DESC  ";
 }
 $result = $conexao->query($sql);
 
@@ -54,7 +54,7 @@ $result = $conexao->query($sql);
       width: 100px;
       position: relative;
       right: 30px;
-      bottom: 80px;
+      bottom: 70px;
     }
 
     .card-consultar-chamado {
@@ -97,10 +97,8 @@ $result = $conexao->query($sql);
 
     
     table, tr, td{
-               border:none !important;
-               
-              
-        }
+      border:none !important;
+   }
 
     body {
       overflow-x: hidden;
@@ -126,6 +124,7 @@ $result = $conexao->query($sql);
       text-align: center;
       font-size: 24px;
     }
+
    
   </style>
 </head>
@@ -137,10 +136,10 @@ $result = $conexao->query($sql);
   ?>
 
   <div id='filtro'>
-    <input type="search" class="form-control" id="pesquisar" placeholder="Número/ Categoria/ Situação" autofocus autocomplete="on">
+    <input type="search" class="form-control" id="pesquisar" placeholder="#/ Responsável/ Situação" autofocus autocomplete="on">
     <button onclick="searchData()" class="btn btn-lg btn-primary" id="btn">Buscar</button>
   </div>
-
+</div>
   <?php
 
   switch ($_SESSION['nivel']) {
@@ -210,7 +209,7 @@ $result = $conexao->query($sql);
               $hora = $data[1];
               //Espaço na hora de imprimir
               $space = ' ';
-
+  
               //'2023-05-26'  Transforma a data em um array também 
               $data_criacao = explode('-',  $data[0]);
               //Inverte o array que está [2023,05,26] para [26,05,2023] 
@@ -223,31 +222,33 @@ $result = $conexao->query($sql);
               echo "<td>" . $user_data['usuario'] . "</td>";
               echo "<td>" . $user_data['titulo'] . "</td>";
               echo "<td>" . $user_data['categoria'] . "</td>";
-              
               echo "<td>" . $user_data['responsavel'] . "</td>";
-              if($user_data['respostas'] == "" && $user_data['responsavel'] == $usuario_logado) {
+              if(($user_data['responsavel'] == $usuario_logado || $usuario_logado == $user_data['usuario']) && $user_data['respostas_resp'] == null) {
                   echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Responder</a></td>";;
               } else {
-                  echo "<td><a class='btn btn-primary' href='respondido.php?id=$user_data[id]'>ver resposta</a></td>";
+                  echo "<td><a class='btn btn-danger' href='resposta.php?id=$user_data[id]'>ver respostas</a></td>";
               }
               echo "<td>" . $user_data['situacao'] . "</td>";
               echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
-              echo "<td>" . $data_criacao . $space . substr($hora, 0, 5) . "</td>";
+              echo "<td>" . $data_criacao . $space .  substr($hora, 0, 5) . "</td>";
 
               if ($user_data['situacao'] == "Novo" && $user_data['usuario'] != $usuario_logado) {
                 echo "<td><a class='btn btn-lg btn-warning'  href='iniciar.php?id=$user_data[id]'>Iniciar</a></td>";
               } 
-               if ( $user_data['usuario'] == $usuario_logado && $user_data['situacao'] != "Em Atendimento"
-                    && $user_data['situacao'] != "Finalizado"){
+               if ( $user_data['usuario'] == $usuario_logado ){
                 echo "<td><a class='btn btn-lg btn-info' href='edita.php?id=$user_data[id]'>Editar</a></td>";
               }
 
               if ($usuario_logado == $user_data['responsavel']) {
-                if ($user_data['situacao'] == "Em Atendimento") {
+                if ($user_data['situacao'] == "Em Atendimento" && $user_data['respostas_resp'] != null) {
 
                      echo "<td><a  data-toggle='tooltip' data-placement='right' title='Finalizar' class='btn btn-lg btn-success' href='confirm.php?id=$user_data[id]'>Finalizar</a></td>"; 
+                } 
+                
+                if($user_data['situacao'] == "Em Atendimento" && $user_data['respostas_resp'] == null) {
+                     echo "<td><span class='btn  btn-secondary'>Responda para finalizar!</span></td>";
                 }
-              } else if($user_data['situacao'] != "Novo"){
+              } else if($user_data['situacao'] == "Em Atendimento" && $usuario_logado != $user_data['usuario']){
                 echo "<td><p class='btn  btn-secondary'>". $user_data['responsavel']."</p></td>";
               }
 

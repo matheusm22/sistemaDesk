@@ -22,7 +22,6 @@
       right: 110px;
 
     }
-    
   </style>
 </head>
 
@@ -33,10 +32,9 @@
 
   include_once('config.php');
 
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
+  if (!isset($_SESSION)) {
+    session_start();
+  }
   // Limpara o buffer de redirecionamento
   ob_start();
 
@@ -55,57 +53,90 @@
     exit();
   }
 
-if(!empty($_GET['id'])) {
- 
-  include_once('config.php');
+  if (!empty($_GET['id'])) {
 
-  $id = $_GET['id'];
+    include_once('config.php');
 
-  $sql = "SELECT * FROM tb_pedidos WHERE id=$id";
+    $id = $_GET['id'];
 
-  $result = $conexao->query($sql);
+    $sql = "SELECT * FROM tb_pedidos WHERE id=$id";
 
-  if($result->num_rows > 0) {
+    $result = $conexao->query($sql);
 
-   while ($user_data = mysqli_fetch_assoc($result)) {
+    if ($result->num_rows > 0) {
 
+      while ($user_data = mysqli_fetch_assoc($result)) {
 
-    
-    $titulo = $user_data['titulo'];
-    $categoria = $user_data['categoria'];
-    $descricao = $user_data['descricao'];
+        $titulo = $user_data['titulo'];
+        $categoria = $user_data['categoria'];
+        $descricao = $user_data['descricao'];
+      }
     }
   }
-}
-    // VERIFICAR SE ESTA ENVIANDO CORRETAMENTE EM CASO DE ERRO!
-    //  print_r('titulo : ' . $titulo);
-    //  print_r('<br/>' );
-    //  print_r('cat : ' . $categoria);
-    //  print_r('<br/>' );
-    //  print_r('desc : ' . $descricao);
+
+  if (isset($_POST['submit'])) {
+
+    $nivel = $_SESSION['nivel'];
+
+    $id = $_POST['id'];
+    $titulo = $_POST['titulo'];
+    $categoria = $_POST['categoria'];
+    $descricao = $_POST['descricao'];
+
+    if (empty($descricao)) {
+
+      $sql = "UPDATE tb_pedidos SET titulo ='$titulo', 
+      categoria = '$categoria' WHERE id = '$id' ";
+      $result = $conexao->query($sql);
+
+      echo  "<p class='p' style='color: green;'>Editado!</p>";
+
+      header("location:edita.php?&id={$id}");
+    } else {
+
+      $sql = "UPDATE tb_pedidos SET titulo ='$titulo', 
+      categoria = '$categoria', descricao = '$descricao' WHERE id = '$id' ";
+      $result = $conexao->query($sql);
+
+      echo  "<p class='p' style='color: green;'>Editado!</p>";
+
+      header("location:edita.php?&id={$id}");
+    }
+    if ($nivel == 2) {
+      header('location: consultar_chamado.php');
+    } else {
+      header('location: meus_chamados.php');
+    }
+  }
+  // VERIFICAR SE ESTA ENVIANDO CORRETAMENTE EM CASO DE ERRO!
+  //  print_r('titulo : ' . $titulo);
+  //  print_r('<br/>' );
+  //  print_r('cat : ' . $categoria);
+  //  print_r('<br/>' );
+  //  print_r('desc : ' . $descricao);
 
   ?>
- 
-    <div class="container">
-      <div class="row">
 
-        <div class="card-abrir-chamado">
-          <div class="card">
-            <div class="card-header">
-              Editar chamado
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                <form action="saveEdit.php" method="POST">
+  <div class="container">
+    <div class="row">
+
+      <div class="card-abrir-chamado">
+        <div class="card">
+          <div class="card-header">
+            Editar chamado
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <form action="" method="POST">
                   <div class="form-group">
                     <label>Título</label>
-                    <input type="text" name="titulo" value="<?php echo $titulo?>" autofocus class="form-control w-50" placeholder="Título">
+                    <input type="text" name="titulo" value="<?php echo $titulo ?>" autofocus class="form-control w-50" placeholder="Título">
                   </div>
 
                   <div class="form-group w-50">
                     <label>Categoria</label>
-                    <select name="categoria" value="<?php echo $categoria?>" class="form-control">
+                    <select name="categoria" value="<?php echo $categoria ?>" class="form-control">
                       <option name="categoria">Criação Usuário</option>
                       <option name="categoria">Impressora</option>
                       <option name="categoria">Hardware</option>
@@ -113,34 +144,43 @@ if(!empty($_GET['id'])) {
                       <option name="categoria">Rede</option>
                     </select>
                   </div>
-                  
+
                   <div class="form-group">
-                  <label>Descrição atual:</label>
-                    <?php echo "<p><strong>$descricao</strong></p>"?> 
+                    <label>Descrição atual:</label>
+                    <?php echo "<p><strong>$descricao</strong></p>" ?>
                     <label> Nova descrição:</label>
                     <textarea class="form-control w-50" name="descricao" rows="3"></textarea>
                   </div>
 
                   <div class="row mt-5">
                     <div class="col-6">
-                     <a class='btn btn-lg btn-primary' id='voltar' href='meus_chamados.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>
-                      
+                      <?php
+                      if ($nivel = 2) {
+
+                        echo "<a class='btn btn-lg btn-primary' id='voltar' href='consultar_chamado.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
+                      } else {
+
+                        echo "<a class='btn btn-lg btn-primary' id='voltar' href='meus_chamados.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
+                      }
+                      ?>
+
+
                     </div>
 
                     <div class="col-6">
-                      <input type="hidden" name="id"  value="<?php echo $id ?>"> 
+                      <input type="hidden" name="id" value="<?php echo $id ?>">
                       <input type="submit" class="btn btn-lg btn-info w-75 " id="enviar" name="submit">
                     </div>
                   </div>
-  </form>
+                </form>
 
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </body>
 
 </html>
