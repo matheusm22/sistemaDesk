@@ -9,9 +9,9 @@
             text-align: center;
             padding: 30px;
         }
-        h1 {
-            font-size: 20px;
-            color: black;
+        
+        span {
+            font-size: 24px;
         }
         
     </style>
@@ -26,7 +26,7 @@ echo "<div>";
 include_once 'config.php';
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-echo '<h1>Deseja realmente finalizar esta solicitação?</h1>';
+echo '<span>Deseja realmente finalizar esta solicitação?</span>';
 echo "<br>";
 echo "<br>";
 

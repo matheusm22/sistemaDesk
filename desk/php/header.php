@@ -56,7 +56,7 @@
       }
        $usuario = $_SESSION['usuario'];
 
-       echo "<h2 color: white;>$usuario</h2>"
+       echo "<h2 color: white;>Usuário: $usuario</h2>"
 
       ?>
       <a href="sair.php" class="btn  btn-lg btn-danger  me-2" data-toggle="tooltip" data-placement="right" title="Deslogar?" onclick="return confirm('Tem certeza que deseja sair?')">Sair</a>

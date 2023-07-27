@@ -220,9 +220,9 @@ $result = $conexao->query($sql);
               echo "<td>" . $user_data['categoria'] . "</td>";
               echo "<td>" . $user_data['responsavel'] . "</td>";
               if($user_data['respostas_resp'] == "") {
-                echo "<td><p class='btn  btn-secondary'>Sem resposta</p></td>";
+                echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Responder</a></td>";
               } else {
-                  echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>ver respostas</a></td>";
+                echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Ver respostas</a></td>";
               }
               echo "<td>" . $user_data['situacao'] . "</td>";
               echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";

@@ -52,7 +52,7 @@
       font-size: 18px;
       position: relative;
       left: 530px;
-      bottom: 60px;
+      bottom: 40px;
     }
 
     .titulos{
@@ -231,30 +231,26 @@
               <div class="col">
                 <form action="" method="POST">
                   <div class="form-group">
-                    <label>Título</label>
-                    <input type="text" name="titulo" disabled value="<?php echo $titulo ?>" autofocus class="form-control w-50" placeholder="Título">
+                    <label>Título:</label>
+                    <?php echo"<strong>$titulo</strong>";?>
                   </div>
                   <div class="solicitante">
                   <?php 
-                   echo "<span>Solicitante: <strong>$solicitante</strong></usuario_logadospan>";
+                   echo "<span>Solicitante: <strong>$solicitante</strong></span>";
                    echo "<br>";
                    echo "<span>Número da solicitação: <strong>$id</strong></span>";
                   ?>
                   </div>
                   <div class="form-group w-50" id="categoria">
-                    <label>Categoria</label>
-                    <select name="categoria" disabled value="<?php echo $categoria ?>" class="form-control">
-                      <option name="categoria">Criação Usuário</option>
-                      <option name="categoria">Impressora</option>
-                      <option name="categoria">Hardware</option>
-                      <option name="categoria">Software</option>
-                      <option name="categoria">Rede</option>
-                    </select>
+                    <label>Categoria:</label>
+                    <?php echo "<strong>$categoria</strong>"?>
+                     
                   </div>
 
                   <div class="form-group" id="descricao">
                     <label>Descrição atual:</label>
-                    <?php echo "<p>$descricao</p>";
+                    <?php echo "<strong>$descricao</strong>";
+                          echo "<br>";
                        
                       $data = explode(' ', $data);
 
@@ -269,15 +265,16 @@
                       $datas = implode('/', $datas);
 
                     if ($respostas_resp != null) {
-                      echo "<span id='resposta_titulo'><strong>Respostas</strong></span>";
-                      echo "<br>";
-                      echo "<span class='titulos'>Responsável $responsavel</label>";
-                      echo "<br>";
-                      echo "<span class='data'>$space $datas $space " . substr($hora, 0, 5)."</span>";
-                      echo "<br>";
-                      echo "<span class='respostas'><strong>$respostas_resp</strong></span>";
-                      echo "<br>";
-                      echo "<br>";
+                          echo "<br>";
+                          echo "<span id='resposta_titulo'><strong>Respostas</strong></span>";
+                          echo "<br>";
+                          echo "<span class='titulos'>Responsável $responsavel</label>";
+                          echo "<br>";
+                          echo "<span class='data'>$space $datas $space " . substr($hora, 0, 5)."</span>";
+                          echo "<br>";
+                          echo "<span class='respostas'><strong>$respostas_resp</strong></span>";
+                          echo "<br>";
+                          echo "<br>";
                     }
                     
                     if ($respostas_soli != null) {
