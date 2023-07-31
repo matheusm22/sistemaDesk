@@ -211,6 +211,6 @@ if (isset($_SESSION['msg'])) {
   </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="/desk/js/script.js"></script>
+  <script src="/desk/js/script.js"></script> 
   
 </html>
