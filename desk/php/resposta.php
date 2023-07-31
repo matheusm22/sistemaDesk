@@ -223,9 +223,19 @@
 
       <div class="card-abrir-chamado">
         <div class="card">
-          <div class="card-header">
+          <?php 
+          if($solicitante == $usuario_logado || $responsavel == $usuario_logado){
+          echo "
+          <div class='card-header'>
             Responder chamado
-          </div>
+          </div>";
+          } else {
+            echo "
+            <div class='card-header'>
+              Respostas
+            </div>";
+          }
+          ?>
           <div class="card-body">
             <div class="row">
               <div class="col">

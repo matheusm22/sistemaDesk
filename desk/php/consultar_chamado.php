@@ -226,7 +226,7 @@ $result = $conexao->query($sql);
               if(($user_data['responsavel'] == $usuario_logado || $usuario_logado == $user_data['usuario']) && $user_data['respostas_resp'] == null) {
                   echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Responder</a></td>";;
               } else {
-                  echo "<td><a class='btn btn-danger' href='resposta.php?id=$user_data[id]'>ver respostas</a></td>";
+                  echo "<td><a class='btn btn-danger' href='resposta.php?id=$user_data[id]'>ver Chamado</a></td>";
               }
               echo "<td>" . $user_data['situacao'] . "</td>";
               echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
@@ -255,7 +255,13 @@ $result = $conexao->query($sql);
               if ($user_data['situacao'] == "Finalizado") {
                 echo "<td><p class='btn btn-lg btn-success'>Concluído</p></td>";
               }
-             
+
+              if($user_data['situacao'] == "Novo" && $usuario_logado == $user_data['responsavel']) {
+
+                $_SESSION['msg'] = "<span id='mensagem' style='color: #fff000; font-size: 20px'>Você tem uma nova solicitação!</span>";
+
+              }
+
             }
 
 

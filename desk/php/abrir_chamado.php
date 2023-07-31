@@ -81,8 +81,8 @@
       
       $usuario_logado =  $_SESSION['usuario'];
       $nomes = array('matheus', 'gustavo', 'matheus_cichon', 'kaio_costa', 'lucas_dias');
-      $rand_keys = array_rand($nomes, 4);
-      $responsavel = $nomes[$rand_keys[rand(0, 1)]];
+      $rand_keys = array_rand($nomes, 5);
+      $responsavel = $nomes[$rand_keys[rand(0, 4)]];
 
       if($responsavel != $usuario_logado) { 
 
@@ -107,6 +107,8 @@
             $titulo = null;
             $categoria = null;
             $descricao = null;
+
+            
         
         } 
       }

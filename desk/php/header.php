@@ -16,14 +16,18 @@
       position: relative;
 
     }
-     h2{
+     #user{
       color: aliceblue;
       font-size: 22px;
       position: relative;
-      left: 440px;
-      top: 5px;
+      left: 240px;
       
     } 
+    #mensagem {
+      position: relative;
+      right: 20px;
+    }
+   
   </style>
   <title>App Help Desk</title>
 </head>
@@ -54,9 +58,22 @@
       </a>";
           break;
       }
+
+              // Verificar se existe a variável global "msg" e acessa o IF
+        if (isset($_SESSION['msg'])) {
+          // Imprimir o valor da variável global "msg"
+          echo $_SESSION['msg'];
+
+          echo "<script>setTimeout(function() {
+            $('.p').fadeOut('fast');
+          }, 3000);</script>";
+
+          // Destruir a variável globar "msg"
+          unset($_SESSION['msg']);
+        }
        $usuario = $_SESSION['usuario'];
 
-       echo "<h2 color: white;>Usuário: $usuario</h2>"
+       echo "<span id='user' color: white;>Usuário: $usuario</span>"
 
       ?>
       <a href="sair.php" class="btn  btn-lg btn-danger  me-2" data-toggle="tooltip" data-placement="right" title="Deslogar?" onclick="return confirm('Tem certeza que deseja sair?')">Sair</a>
