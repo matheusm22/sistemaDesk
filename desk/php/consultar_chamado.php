@@ -226,7 +226,7 @@ $result = $conexao->query($sql);
               if(($user_data['responsavel'] == $usuario_logado || $usuario_logado == $user_data['usuario']) && $user_data['respostas_resp'] == null) {
                   echo "<td><a class='btn btn-primary' href='resposta.php?id=$user_data[id]'>Responder</a></td>";;
               } else {
-                  echo "<td><a class='btn btn-danger' href='resposta.php?id=$user_data[id]'>ver Chamado</a></td>";
+                  echo "<td><a class='btn btn-danger' href='resposta.php?id=$user_data[id]'>Ver Chamado</a></td>";
               }
               echo "<td>" . $user_data['situacao'] . "</td>";
               echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
@@ -249,7 +249,7 @@ $result = $conexao->query($sql);
                      echo "<td><span class='btn  btn-secondary'>Responda para finalizar!</span></td>";
                 }
               } else if($user_data['situacao'] == "Em Atendimento" && $usuario_logado != $user_data['usuario']){
-                echo "<td><p class='btn  btn-secondary'>". $user_data['responsavel']."</p></td>";
+                echo "<td><p class='btn  btn-secondary'> Em Atendimento: " . $user_data['responsavel']."</p></td>";
               }
 
               if ($user_data['situacao'] == "Finalizado") {

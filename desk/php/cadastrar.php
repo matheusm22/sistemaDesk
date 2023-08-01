@@ -5,12 +5,15 @@
   <title>App Help Desk</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" +058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css
+    ">
 
   <style>
     .card-login {
       padding: 170px 0 0 0;
       width: 360px;
       margin: 0 auto;
+
     }
 
     .card-header {
@@ -28,6 +31,16 @@
       font-size: 20px;
 
     }
+
+    #voltar{
+      position: relative;
+      left: 250px;
+      bottom: 10px;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    
   </style>
 </head>
 
@@ -99,7 +112,7 @@
                 $('.label').fadeOut('fast');
               }, 3000);</script>";
             } else {
-              $_SESSION['msg'] = "<p style='color: green;'>Usuário cadastrado, Bem-vindo" . $usuario . "!</p>";
+              $_SESSION['msg'] = "<p style='color: white;'>Usuário cadastrado, Bem-vindo" . $usuario . "!</p>";
               echo "<script>setTimeout(function() {
                 window.location.href = '/desk/index.php';
             }, 1200); </script>";
@@ -123,23 +136,22 @@
             <div class="card-body">
 
               <div class="form-group">
-                <input type="text" class="form-control" autofocus name="usuario" id="usuario"  placeholder="Usuário">
+                <input type="text" class="form-control w-75" autofocus name="usuario" id="usuario"  placeholder="Usuário">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha">
+                <input type="password" class="form-control w-75" name="senha" id="senha" placeholder="Senha">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control w-50" name="matricula" id="matricula" placeholder="Matricula">
-              </div>
+                <input type="text" class="form-control w-50" name="matricula" id="matricula" placeholder="Matricula"> <a href="/desk/index.php" id="voltar">Voltar</a>
               <button class="btn btn-lg btn-danger btn-block" id="adicionar" name="submit" type="submit">Adicionar</button>
-              <br>
+              
   </form>
   </div>
   </div>
   </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="/desk/js/script.j"></script>
+  <script src="/desk/js/script.js"></script>
 
 
 

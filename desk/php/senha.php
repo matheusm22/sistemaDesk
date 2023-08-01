@@ -5,6 +5,8 @@
   <title>App Help Desk</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" +058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css
+    ">
 
   <style>
     .card-login {
@@ -12,6 +14,13 @@
       width: 360px;
       margin: 0 auto;
     }
+
+    .form-control {
+      position: relative;
+      left: 50px;
+    }
+
+    
 
     .card-header {
       text-align: center;
@@ -26,6 +35,14 @@
     label {
       font-size: 20px;
 
+    }
+
+    #voltar{
+      position: relative;
+      left: 250px;
+      top: 2px;
+      font-size: 20px;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -113,16 +130,17 @@
             <div class="card-body">
 
               <div class="form-group">
-                <input type="text" class="form-control w-50" autofocus name="matricula" id="matricula" placeholder="Matricula">
+                <input type="text" class="form-control w-50" autofocus name="matricula" id="matricula" placeholder="matricula">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" name="senha" placeholder="Senha">
+                <input type="password" class="form-control w-75" id="senha" name="senha" placeholder="Senha">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" name="confirma" placeholder="Confirmar Senha">
+                <input type="password" class="form-control w-75" name="confirma" placeholder="Confirmar Senha">
               </div>
-              <button class="btn btn-lg btn-primary btn-block" id="Alterar" name="submit" type="submit">Alterar</button>
-              <br>
+              <button class="btn btn-lg btn-primary btn-block" id="Alterar" name="submit" type="submit">Alterar</button> 
+              <a href="/desk/index.php" id="voltar">Voltar</a>
+              
   </form>
   </div>
   </div>
