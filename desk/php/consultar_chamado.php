@@ -193,7 +193,7 @@ $result = $conexao->query($sql);
               $data_atua = explode(' ', $user_data['dta_atualizacao']);
 
               $hora1 = $data_atua[1];
-              //Espaço na hora de imprimir
+              // Espaço na hora de imprimir
               $space = ' ';
 
               //'2023-05-26'  Transforma a data em um array também 
