@@ -168,7 +168,6 @@ $result = $conexao->query($sql);
               <tr>
                 <th>#</th>
                 <th>Solicitante</th>
-                <th>Título</th>
                 <th>Categoria</th>
                 <th>Responsável</th>
                 <th>Resposta</th>
@@ -220,7 +219,6 @@ $result = $conexao->query($sql);
               echo "<tr>";
               echo "<td>" . $user_data['id'] . "</td>";
               echo "<td>" . $user_data['usuario'] . "</td>";
-              echo "<td>" . $user_data['titulo'] . "</td>";
               echo "<td>" . $user_data['categoria'] . "</td>";
               echo "<td>" . $user_data['responsavel'] . "</td>";
               if(($user_data['responsavel'] == $usuario_logado || $usuario_logado == $user_data['usuario']) && $user_data['respostas_resp'] == null) {
@@ -235,7 +233,7 @@ $result = $conexao->query($sql);
               if ($user_data['situacao'] == "Novo" && $user_data['usuario'] != $usuario_logado) {
                 echo "<td><a class='btn btn-lg btn-warning'  href='iniciar.php?id=$user_data[id]'>Iniciar</a></td>";
               } 
-               if ( $user_data['usuario'] == $usuario_logado ){
+               if ( $user_data['usuario'] == $usuario_logado && $user_data['situacao'] != 'Finalizado'){
                 echo "<td><a class='btn btn-lg btn-info' href='edita.php?id=$user_data[id]'>Editar</a></td>";
               }
 

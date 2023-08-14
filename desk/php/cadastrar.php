@@ -32,6 +32,12 @@
 
     }
 
+    .form-control{
+      position: relative;
+      left: 40px;
+      top: 5px;
+    }
+
     #voltar{
       position: relative;
       left: 250px;
@@ -40,6 +46,14 @@
       text-decoration: none;
     }
 
+    #matricula{
+      width: 100px;
+    }
+
+    #adicionar {
+      position: relative;
+      top: 10px;
+    }
     
   </style>
 </head>
@@ -131,7 +145,7 @@
         <div class="card-login">
           <div class="card">
             <div class="card-header">
-              Cadastrar Usuário
+              Adicionar Usuário
             </div>
             <div class="card-body">
 
@@ -142,7 +156,7 @@
                 <input type="password" class="form-control w-75" name="senha" id="senha" placeholder="Senha">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control w-50" name="matricula" id="matricula" placeholder="Matricula"> <a href="/desk/index.php" id="voltar">Voltar</a>
+                <input type="text" class="form-control" name="matricula" id="matricula" placeholder="Matricula"> <a href="/desk/index.php" id="voltar">Voltar</a>
               <button class="btn btn-lg btn-danger btn-block" id="adicionar" name="submit" type="submit">Adicionar</button>
               
   </form>

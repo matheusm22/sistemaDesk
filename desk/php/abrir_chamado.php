@@ -104,9 +104,7 @@
             echo "<script>setTimeout(function() {
               $('#p').fadeOut('fast');
             }, 2000);</script>";    
-            $titulo = null;
-            $categoria = null;
-            $descricao = null;
+            
 
             
         
@@ -117,7 +115,7 @@
 
 
     // VERIFICAR SE ESTA ENVIANDO CORRETAMENTE EM CASO DE ERRO!
-    //  print_r('titulo : ' . $titulo);
+    // print_r('titulo : ' . $titulo);
     //  print_r('<br/>' );
     //  print_r('cat : ' . $categoria);
     //  print_r('<br/>' );
@@ -164,11 +162,11 @@
                       <?php
                       switch ($_SESSION['nivel']) {
                       
-                        case '1':
+                        case 1:
                             echo " <a class='btn btn-lg btn-primary' id='voltar' href='home.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
                               break;
                       
-                        case '2':  
+                        case 2:  
                           
                           echo " <a class='btn btn-lg btn-primary' id='voltar' href='admin.php' name='voltar' type='button' data-toggle='tooltip' data-placement='right' title='Página inicial'>Voltar</a>";
                               break;

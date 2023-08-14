@@ -157,7 +157,7 @@
      $situacao = $user_data['situacao'];   
 
     
-     if($usuario_logado == $solicitante) {
+     if($usuario_logado == $solicitante && $resposta != '') {
         
         $sqlResp = "UPDATE tb_pedidos SET respostas_soli = '$resposta' where id = '$id' ";
         $result = $conexao->query($sqlResp);  
@@ -170,7 +170,7 @@
           header("location:resposta.php?&id={$id}");
     } 
 
-    if($usuario_logado == $responsavel) {
+    if($usuario_logado == $responsavel && $resposta != '') {
         
         $sqlResp = "UPDATE tb_pedidos SET respostas_resp = '$resposta' where id = '$id' ";
         $result = $conexao->query($sqlResp);
@@ -184,7 +184,7 @@
  
     } 
 
-    if($usuario_logado == $responsavel && $situacao == 'Novo') {
+    if($usuario_logado == $responsavel && $situacao == 'Novo' && $resposta != '') {
     
         $sqlResp = "UPDATE tb_pedidos SET respostas_resp = '$resposta', situacao ='Em Atendimento' where id = '$id' ";
         $result = $conexao->query($sqlResp);
@@ -196,6 +196,11 @@
           
           header("location:resposta.php?&id={$id}");           
             
+    } else {
+      echo  "<p class='p' style='color: red;'>Por favor envie uma resposta!</p>";
+      echo "<script>setTimeout(function() {
+       $('.p').fadeOut('fast');
+     }, 3000);</script>";
     }
   
     $id = $_POST['id'];
@@ -299,9 +304,11 @@
 
                     if($usuario_logado == $solicitante || $usuario_logado == $responsavel) {
                       echo " <span>Enviar Resposta:</span>
-                             <textarea class='form-control w-50' name='resposta' rows='3'></textarea>
+                             <textarea class='form-control w-50' name='resposta' rows='3' required></textarea>
                              </div>";
                     }
+
+                    
                     ?>
 
                     <div class="row mt-5">

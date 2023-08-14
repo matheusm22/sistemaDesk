@@ -10,7 +10,6 @@
     .navbar navbar-dark bg-dark {
       position: relative;
       
-
     }
     .navbar-brand {
       position: relative;
@@ -20,7 +19,7 @@
       color: aliceblue;
       font-size: 22px;
       position: relative;
-      left: 240px;
+      right: 440px;
       
     } 
     #mensagem {

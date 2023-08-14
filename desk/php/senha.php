@@ -20,6 +20,9 @@
       left: 50px;
     }
 
+    #matricula{
+      width: 100px;
+    }
     
 
     .card-header {
@@ -130,7 +133,7 @@
             <div class="card-body">
 
               <div class="form-group">
-                <input type="text" class="form-control w-50" autofocus name="matricula" id="matricula" placeholder="matricula">
+                <input type="text" class="form-control" autofocus name="matricula" id="matricula" placeholder="Matricula">
               </div>
               <div class="form-group">
                 <input type="password" class="form-control w-75" id="senha" name="senha" placeholder="Senha">
@@ -138,8 +141,10 @@
               <div class="form-group">
                 <input type="password" class="form-control w-75" name="confirma" placeholder="Confirmar Senha">
               </div>
-              <button class="btn btn-lg btn-primary btn-block" id="Alterar" name="submit" type="submit">Alterar</button> 
               <a href="/desk/index.php" id="voltar">Voltar</a>
+              <br>
+              
+              <button class="btn btn-lg btn-primary btn-block" id="Alterar" name="submit" type="submit">Alterar</button> 
               
   </form>
   </div>
