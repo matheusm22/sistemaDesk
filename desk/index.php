@@ -21,7 +21,7 @@
     p {
       position: relative;
       top: 15px;
-      margin-left: 630px;
+      margin-left: 510px;
       font-size: 25px;
     }
 
@@ -83,6 +83,7 @@
       $_SESSION['id_usuario'] = $user_data['id_usuario'];
       $_SESSION['usuario'] = $user_data['usuario'];
       $_SESSION['nivel'] = $user_data['nivel'];
+      $_SESSION['matricula'] = $user_data['matricula'];
       // Verificar se a senha digitada pelo usuário no formulário é igual a senha salva no banco de dados
       if (password_verify($senha, $user_data['senha'])) {
 

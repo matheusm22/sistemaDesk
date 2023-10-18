@@ -54,7 +54,8 @@ $result = $conexao->query($sql);
       width: 100px;
       position: relative;
       right: 30px;
-      bottom: 70px;
+      bottom: 80px;
+   
     }
 
     .card-consultar-chamado {
@@ -73,20 +74,21 @@ $result = $conexao->query($sql);
 
     #filtro {
       position: relative;
-      left: 600px;
+      left: 500px;
       padding: 30px;
+      
 
     }
 
     #pesquisar {
-      width: 255px;
+      width: 235px;
     }
 
     #btn {
 
       position: relative;
-      left: 270px;
-      bottom: 38px
+      left: 250px;
+      bottom: 42px
     }
 
     #voltar {
@@ -98,6 +100,7 @@ $result = $conexao->query($sql);
     
     table, tr, td{
       border:none !important;
+     
    }
 
     body {
@@ -112,13 +115,18 @@ $result = $conexao->query($sql);
     }
 
     td {
-      width: 190px;
+      width: 100px;
     }
 
     td:nth-child(8) {
       width: 350px;
     }
   
+    #teste {
+      background: none;
+      border: none;
+      color: black;
+    }
     
     .card-header {
       text-align: center;
@@ -160,7 +168,8 @@ $result = $conexao->query($sql);
     <div class="row">
 
       <div class="card-consultar-chamado">
-             <p id="titulo"><strong>Consulta de chamado<strong></p>
+        <?php if ($result->num_rows != 0)
+           echo "<p id='titulo'><strong>Consulta de chamado<strong></p>"; ?>
           </div>
 
           <table class="table" >
@@ -172,7 +181,7 @@ $result = $conexao->query($sql);
                 <th>Responsável</th>
                 <th>Resposta</th>
                 <th>Situação</th>
-                <th>Atualizado em</th>
+                <th>Atualização</th>
                 <th>Enviado em</th>
                 <th>Ações</th>
               </tr>
@@ -185,6 +194,7 @@ $result = $conexao->query($sql);
             if ($result->num_rows == 0) {
               echo '<td colspan="10">';
               echo "Nenhuma solicitação pendente!!!</td>";
+            
             }
 
             while ($user_data = mysqli_fetch_assoc($result)) {

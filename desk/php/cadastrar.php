@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <title>App Help Desk</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" +058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css
     ">
@@ -66,13 +65,17 @@
       App Help Desk
     </a>
   </nav>
-  <?
+  <?php
 
-  if (isset($_POST['usuario']) || isset($_POST['senha']) || isset($_POST['matricula'])) {
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+  if (isset($_POST['usuario']) || isset($_POST['senha'])) {
     include_once('config.php');
     $usuario = $_POST['usuario'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-    $matricula = $_POST['matricula'];
+
 
     if (strlen($_POST['senha']) < 6 or strlen($usuario) < 6) {
       echo "<label class='label' style='color: #fff;'>Erro: Senha ou usuário com menos de 6 caracteres!</label>";
@@ -81,24 +84,6 @@
       }, 3000);</script>";
     } else {
 
-      if (strlen($matricula) != 4) {
-
-        echo "<label class='label' style='color: #fff;'>Número de matricula inválido!, EX:0000</label>";
-        echo "<script>setTimeout(function() {
-          $('.label').fadeOut('fast');
-        }, 3000);</script>";
-      } else {
-
-        $verifica_matricula = mysqli_query($conexao, "SELECT matricula FROM tb_acessos
-         WHERE matricula = '$matricula' ORDER BY id_usuario ASC");
-
-        if ($verifica_matricula->num_rows > 0) {
-
-          echo "<label class='label' style='color: #fff;'>Erro: Número de matricula em uso, Tente outro!</label>";
-          echo "<script>setTimeout(function() {
-            $('.label').fadeOut('fast');
-          }, 3000);</script>";
-        } else {
 
           $verifica_usuario = mysqli_query($conexao, "SELECT usuario FROM tb_acessos
          WHERE usuario = '$usuario' ORDER BY id_usuario ASC");
@@ -112,7 +97,7 @@
 
             $usuario = $_POST['usuario'];
             $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-            $matricula = $_POST['matricula'];
+            $matricula = rand(1000,9999);
 
             $insert = mysqli_query($conexao, "INSERT INTO tb_acessos(usuario,senha,matricula, ativo, nivel) 
               VALUES ('$usuario', '$senha','$matricula', 'Sim', 1)");
@@ -123,10 +108,13 @@
             if ($sql->num_rows == 0 || $usuario == '' || $senha == '' || $matricula == '') {
               echo "<label class='p' style='color: #ffff;'>Erro: Usuário não cadastrado, tente novamente!</label>";
               echo "<script>setTimeout(function() {
-                $('.label').fadeOut('fast');
+                $('.p').fadeOut('fast');
               }, 3000);</script>";
             } else {
-              $_SESSION['msg'] = "<p style='color: white;'>Usuário cadastrado, Bem-vindo" . $usuario . "!</p>";
+              $_SESSION['msg'] = "<p class='p' style='color: #ffff;'> Bem-vindo " . $usuario . " <br/> Matrícula: " . $matricula . "!</p>";
+              echo "<script>setTimeout(function() {
+                $('.p').fadeOut('fast');
+              }, 3000);</script>";
               echo "<script>setTimeout(function() {
                 window.location.href = '/desk/index.php';
             }, 1200); </script>";
@@ -134,8 +122,7 @@
           }
         }
       }
-    }
-  }
+    
   ?>
 
   <form action="" method="POST">
@@ -156,7 +143,8 @@
                 <input type="password" class="form-control w-75" name="senha" id="senha" placeholder="Senha">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="matricula" id="matricula" placeholder="Matricula"> <a href="/desk/index.php" id="voltar">Voltar</a>
+              <br>
+              <a href="/desk/index.php" id="voltar">Voltar</a>
               <button class="btn btn-lg btn-danger btn-block" id="adicionar" name="submit" type="submit">Adicionar</button>
               
   </form>

@@ -19,7 +19,14 @@
       color: aliceblue;
       font-size: 22px;
       position: relative;
-      right: 440px;
+      right: 240px;
+     }
+
+     #mat{
+      color: aliceblue;
+      font-size: 22px;
+      position: relative;
+      left: 180px;
       
     } 
     #mensagem {
@@ -71,8 +78,10 @@
           unset($_SESSION['msg']);
         }
        $usuario = $_SESSION['usuario'];
-
-       echo "<span id='user' color: white;>Usuário: $usuario</span>"
+       $matricula = $_SESSION['matricula'];
+      
+       echo "<span id='user' color: white;>Usuário: $usuario</span>";    
+       echo "<span id='mat' color: white;>Matrícula: $matricula</span>";    
 
       ?>
       <a href="sair.php" class="btn  btn-lg btn-danger  me-2" data-toggle="tooltip" data-placement="right" title="Deslogar?" onclick="return confirm('Tem certeza que deseja sair?')">Sair</a>

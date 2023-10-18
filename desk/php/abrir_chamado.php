@@ -115,7 +115,7 @@
 
 
     // VERIFICAR SE ESTA ENVIANDO CORRETAMENTE EM CASO DE ERRO!
-    // print_r('titulo : ' . $titulo);
+    //  print_r('titulo : ' . $titulo);
     //  print_r('<br/>' );
     //  print_r('cat : ' . $categoria);
     //  print_r('<br/>' );

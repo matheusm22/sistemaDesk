@@ -74,9 +74,9 @@ $result = $conexao->query($sql);
     }
     #filtro {
       position: relative;
-      left: 600px;
+      left: 500px;
       padding: 30px;
-     
+
     }
 
     #pesquisar {
@@ -84,11 +84,11 @@ $result = $conexao->query($sql);
     }
 
     #btn {
-
       position: relative;
       left: 270px;
       bottom: 38px
     }
+
 
     #voltar {
       position: relative;
@@ -96,6 +96,10 @@ $result = $conexao->query($sql);
       bottom: 120px;
     }
 
+    table, tr, td{
+      border:none !important;
+     
+   }
 
     body {
       overflow-x: hidden;
@@ -160,20 +164,21 @@ $result = $conexao->query($sql);
     <div class="row">
 
     <div class="card-consultar-chamado">
-             <p id="titulo"><strong>Consulta de chamado<strong></p>
+    <?php if ($result->num_rows != 0)
+           echo "<p id='titulo'><strong>Consulta de chamado<strong></p>"; ?>
           </div>
 
           <table class="table">
             <thead>
               <tr>
-              <th>#</th>
+                <th>#</th>
                 <th>Solicitante</th>
                 <th>Título</th>
                 <th>Categoria</th>
                 <th>Responsável</th>
                 <th>Resposta</th>
                 <th>Situação</th>
-                <th>Atualizado em</th>
+                <th>Atualização</th>
                 <th>Enviado em</th>
                 <th>Ações</th>
               </tr>
@@ -182,6 +187,9 @@ $result = $conexao->query($sql);
             if ($result->num_rows == 0) {
               echo '<td colspan="10">';
               echo "Nenhuma solicitação pendente!!!</td>";
+              echo "<script>$(function() {
+                setTimeout(function(){ location.reload(); }, 1200);
+            }); </script>";
             }
 
             while ($user_data = mysqli_fetch_assoc($result)) {
